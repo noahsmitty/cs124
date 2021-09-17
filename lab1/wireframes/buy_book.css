@@ -1,0 +1,44 @@
+#to-do {
+    border: 2px solid;
+    background-color: antiquewhite;
+}
+.checkbox {
+    width: 45px;
+    height: 25px;
+    margin-bottom: 80px;
+}
+
+.label {
+    font-size: 3em;
+}
+#task-description {
+    font-size: 3em;
+}
+.submit {
+    font-size: 3em;
+    background: lightblue;
+    color: black;
+    border-radius:20px;
+    text-shadow:none;
+}
+
+#buttons {
+    margin-left: 200pt;
+    margin-right: 0pt;
+}
+
+html {
+    border: 2px solid;
+    background-color: white;
+}
+
+.edit {
+    margin-left: 50px;
+}
+.space {
+    margin-top: 1400px;
+}
+
+h1 {
+    font-size: 6em;
+}
