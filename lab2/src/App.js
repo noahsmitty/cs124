@@ -1,24 +1,33 @@
 import logo from './logo.svg';
+import List from './List'
 import './App.css';
+
+const initialData = [
+  {
+    id: "1",
+    description: "Text John about Bank Statements",
+    isChecked: false
+  },
+  {
+    id: "2",
+    description: "Eat Lunch",
+    isChecked: false
+  },
+  {
+    id: "3",
+    description: "Call Mom",
+    isChecked: true
+  },
+  {
+    id: "4",
+    description: "Buy new John Grisham book",
+    isChecked: false
+  }
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <List></List>
   );
 }
 
