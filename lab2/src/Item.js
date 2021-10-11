@@ -2,13 +2,12 @@ import './Item.css';
 import Edit from "./edit_pencil.png"
 import {useState} from "react";
 function Item(props) {
-    const [checked, setChecked] = useState(false);
-    function handleChecked() {
-        setChecked(!checked);
-        props.onSelected(props.id, checked);
-    }
+    // function handleChecked() {
+    //     setChecked(!checked);
+    //     props.onSelected(props.id, checked);
+    // }
     return (<div>
-        <input type="checkbox" className="checkbox" id={props.id} checked={checked} onChange={handleChecked}/>
+<input type="checkbox" className="checkbox" id={props.id} checked={props.isCompleted} onChange={(e) => props.onItemChange(props.id, "isCompleted", e.target.checked)}/>
             <label htmlFor={props.id} className="label" value={props.description}>{props.description}</label>
         <img src={Edit} height="28" width="28" alt="edit-icon" className="edit"/>
 

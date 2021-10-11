@@ -6,40 +6,52 @@ import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import AddTask from "./AddTask";
 
 const initialData = [
-  {
-    id: '1',
-    description: "Text John about Bank Statements",
-  },
-  {
-    id: '2',
-    description: "Eat Lunch",
-  },
-  {
-    id: '3',
-    description: "Call Mom",
-  },
-  {
-    id: '4',
-    description: "Buy new John Grisham book",
-  }
+    {
+        id: '1',
+        description: "Text John about Bank Statements",
+        isCompleted: false,
+    },
+    {
+        id: '2',
+        description: "Eat Lunch",
+        isCompleted: false,
+    },
+    {
+        id: '3',
+        description: "Call Mom",
+        isCompleted: true,
+    },
+    {
+        id: '4',
+        description: "Buy new John Grisham book",
+        isCompleted: false,
+    }
 ];
 
 function App(props) {
-  const [data, setData] = useState(initialData);
-  function addData(description) {
-    setData([...data, {
-      id: generateUniqueID(),
-      description: description,
-    }])
-  }
+    const [data, setData] = useState(initialData);
 
-  return (
-      <div>
-        <h1>TO-DO LIST</h1>
-      <List todo={data} ></List>
-        <AddTask data={data} onSubmit={addData}/>
-      </div>
-  );
+    function addData(description) {
+        setData([...data, {
+            id: generateUniqueID(),
+            description: description,
+            isCompleted: false,
+        }])
+    }
+
+    function handleItemChange(itemID, field, value) {
+        setData(data.map(item => item.id !== itemID ? item :
+            {...item, [field]: value}
+        ))
+    }
+
+    return (
+        <div>
+            <h1>TO-DO LIST</h1>
+            <List todo={data} onItemChange={handleItemChange}></List>
+            <AddTask data={data} onSubmit={addData}/>
+        </div>
+    );
 }
 
 export default App;
