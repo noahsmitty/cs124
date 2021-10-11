@@ -4,6 +4,7 @@ import './App.css';
 import {useState} from "react";
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import AddTask from "./AddTask";
+import Button from "./Button";
 
 const initialData = [
     {
@@ -45,9 +46,15 @@ function App(props) {
         ))
     }
 
+    function handleHideShow() {
+
+    }
     return (
         <div>
             <h1>TO-DO LIST</h1>
+            <Button handleHide{() => {
+
+            }/>
             <List todo={data} onItemChange={handleItemChange}></List>
             <AddTask data={data} onSubmit={addData}/>
         </div>

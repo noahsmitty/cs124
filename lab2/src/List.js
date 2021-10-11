@@ -21,7 +21,7 @@ function List(props) {
     // }
         return (<div>
                 {props.todo.map(item =>
-                    <Item id={item.id} description={item.description} isCompleted={item.isCompleted}
+                    <Item key={item.id} id={item.id} description={item.description} isCompleted={item.isCompleted}
                           onItemChange={props.onItemChange}
                     ></Item>)}
             </div>
