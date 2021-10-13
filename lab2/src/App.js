@@ -4,7 +4,6 @@ import './App.css';
 import {useState} from "react";
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import AddTask from "./AddTask";
-import Button from "./Button";
 
 const initialData = [
     {
@@ -31,6 +30,7 @@ const initialData = [
 
 function App(props) {
     const [data, setData] = useState(initialData);
+    const [isVisible, setVisibility] = useState(true);
 
     function addData(description) {
         setData([...data, {
@@ -46,16 +46,20 @@ function App(props) {
         ))
     }
 
-    function handleHideShow() {
-
+    function handleDelete() {
+        setData(data.filter(item => !(item.isCompleted)));
     }
+
     return (
         <div>
             <h1>TO-DO LIST</h1>
-            <Button handleHide{() => {
-
-            }/>
-            <List todo={data} onItemChange={handleItemChange}></List>
+            <div className={isVisible ? "visible" : null}>
+                <button type={"button"} onClick={() => {
+                    setVisibility(!isVisible);
+                }}>{isVisible ? "Hide Completed" : "Show Completed"}</button>
+                <button type={"button"} onClick={handleDelete}>Delete Completed</button>
+            </div>
+            <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))} onItemChange={handleItemChange}/>
             <AddTask data={data} onSubmit={addData}/>
         </div>
     );
