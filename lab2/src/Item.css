@@ -1,0 +1,12 @@
+.label {
+    margin-right: 20px;
+}
+
+.item {
+    font-size: 2em;
+}
+
+.checkbox {
+    width: 45px;
+    height: 25px;
+}

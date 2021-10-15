@@ -1,16 +1,18 @@
-import App from "./App";
 import {useState} from "react";
 
 function Alert(props) {
     const [newDesc, setNewDesc] = useState("");
+
     function handleOnChange(value) {
         setNewDesc(value);
     }
+
     return <div className={"backdrop"}>
         <div className="modal">
             Enter a new name for your item:
             <div className={"text"}>
-                <input type={"text"} placeholder={"task description"} onChange={(e) => handleOnChange(e.currentTarget.value)}/>
+                <input type={"text"} placeholder={"task description"}
+                       onChange={(e) => handleOnChange(e.currentTarget.value)}/>
             </div>
 
             <div className="alert-buttons">
@@ -29,4 +31,5 @@ function Alert(props) {
         </div>
     </div>
 }
+
 export default Alert;

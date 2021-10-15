@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import List from './List'
 import './App.css';
 import {useState} from "react";
@@ -61,10 +60,6 @@ function App(props) {
         setData(data.filter(item => !(item.isCompleted)));
     }
 
-    function handleAlertOK(description) {
-        console.log('the frob should be blitzened here');
-    }
-
     function toggleModal() {
         setShowAlert(!showAlert);
     }
@@ -75,15 +70,14 @@ function App(props) {
     }
 
     return (
-        <div className={"App-container"}>
-
+        <div className={"todo"}>
             <div>
                 <h1>TO-DO LIST</h1>
                 <div className={isVisible ? "visible" : null}>
-                    <button type={"button"} onClick={() => {
+                    <button className={"button"} type={"button"} onClick={() => {
                         setVisibility(!isVisible);
                     }}>{isVisible ? "Hide Completed" : "Show Completed"}</button>
-                    <button type={"button"} onClick={handleDelete}>Delete Completed</button>
+                    <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button>
                 </div>
                 <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))} onItemChange={handleItemChange}
                       onButtonClick={toggleModal} passID={changeID}/>

@@ -1,15 +1,13 @@
-.App {
-  text-align: center;
+.button {
+  background: lightblue;
+  color: black;
+  border-radius:20px;
+  text-shadow:none;
 }
 
-.app-container {
-  width: 300pt;
-  height: 400pt;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.todo {
+  border: 2px solid;
+  background-color: antiquewhite;
 }
 
 .backdrop {
