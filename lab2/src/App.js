@@ -64,7 +64,7 @@ function App(props) {
         console.log('the frob should be blitzened here');
     }
 
-    function toggleModal(itemID) {
+    function toggleModal() {
         setShowAlert(!showAlert);
     }
 
