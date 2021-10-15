@@ -51,6 +51,7 @@ function App(props) {
     }
 
     function handleEditItem(field, value) {
+        console.log(storeID);
         setData(data.map(item => item.id !== storeID ? item :
             {...item, [field]: value}
         ))
@@ -69,6 +70,7 @@ function App(props) {
     }
 
     function changeID(itemID) {
+        console.log("changeID called", itemID);
         setStoreID(itemID);
     }
 

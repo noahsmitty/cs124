@@ -7,7 +7,7 @@ function List(props) {
     return (<div>
             {props.todo.map(item =>
                 <Item key={item.id} id={item.id} description={item.description} isCompleted={item.isCompleted}
-                      onItemChange={props.onItemChange} onButtonClick={() => {props.onButtonClick(); props.passID(props.id)}}/>)}
+                      onItemChange={props.onItemChange} onButtonClick={() => props.onButtonClick()} passID={(value) => props.passID(value)}/>)}
         </div>
     );
 }
