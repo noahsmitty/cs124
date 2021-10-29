@@ -5,8 +5,9 @@ function List(props) {
     return (<div className={"list"}>
             {props.todo.map(item =>
                 <Item key={item.id} id={item.id} description={item.description} isCompleted={item.isCompleted}
-                      onItemChange={props.onItemChange} onButtonClick={() => props.onButtonClick()}
-                      passID={(value) => props.passID(value)}/>)}
+                      date={item.creationDate} priority={item.priority} onItemChange={props.onItemChange}
+                      onButtonClick={() => props.onButtonClick()}
+                      onPassID={props.onPassID}/>)}
         </div>
     );
 }

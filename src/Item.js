@@ -8,7 +8,7 @@ function Item(props) {
         <label htmlFor={props.id} className="label" value={props.description}>{props.description}</label>
         <button><img src={Edit} height={"25"} width={"25"} alt={"edit-icon"} className={"edit"} onClick={() => {
             props.onButtonClick();
-            props.passID(props.id);
+            props.onPassID(props.id);
         }}/></button>
 
     </div>);

@@ -35,16 +35,19 @@ function App(props) {
         data = value.docs.map((doc) => {
             return {...doc.data()}});
     }
-    function addData(description) {
+    function addData(description, priority) {
         const item = {
             id: generateUniqueID(),
             description: description,
             isCompleted: false,
+            creationDate: Date.now(),
+            priority: priority,
         };
         const docRef = query.doc(item.id);
         docRef.set(item);
     }
 
+    // handles checkboxes
     function handleItemChange(itemID, field, value) {
         const doc = db.collection(collectionName).doc(itemID);
         doc.update({
@@ -52,14 +55,16 @@ function App(props) {
         })
     }
 
-    function handleEditItem(field, value) {
+    // handles editing an item
+    function handleEditItem(description, priority) {
         const doc = db.collection(collectionName).doc(storeID);
         doc.update({
-            [field]: value,
+            description: description,
+            priority: priority,
         })
     }
 
-    function handleDelete(itemID) {
+    function handleDelete() {
         data.forEach((item) => item.isCompleted && db.collection(collectionName).doc(item.id).delete());
     }
 
@@ -67,7 +72,7 @@ function App(props) {
         setShowAlert(!showAlert);
     }
 
-    function changeID(itemID) {
+    function onChangeID(itemID) {
         setStoreID(itemID);
     }
 
@@ -82,10 +87,18 @@ function App(props) {
                     }}>{isVisible ? "Hide Completed" : "Show Completed"}</button>
                     <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button>
                 </div>
-
-                {data && <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))}
-                      onItemChange={handleItemChange} onButtonClick={toggleModal} passID={changeID}></List>}
+                <div>
+                    <label htmlFor={"sort by"}>Sort By</label>
+                    <select id={"sort by"}>
+                        <option value={"priority"}>Priority</option>
+                        <option value={"name"}>Name</option>
+                        <option value={"creationDate"}>Creation Date</option>
+                    </select>
+                </div>
                 <AddTask data={data} onSubmit={addData}/>
+                {/*{[...data].sort((a, b) => a.priority - b.priority).map(item => (item.priority))}*/}
+                {data && <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))}
+                      onItemChange={handleItemChange} onButtonClick={toggleModal} onPassID={onChangeID}></List>}
             </div>
             {showAlert && <Alert onClose={toggleModal} onOK={handleEditItem}/>}
         </div>
