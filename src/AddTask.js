@@ -10,7 +10,7 @@ export default function AddTask(props) {
         <div id="list">
             <input type="text" id="task-description" placeholder="task description"
                    onChange={(e) => setDescription(e.currentTarget.value)}/>
-            <select onChange={(e) => setPriority(e.currentTarget.value)}>
+            <select id="priority" onChange={(e) => setPriority(e.currentTarget.value)}>
                 <option value={1}>High</option>
                 <option value={2}>Medium</option>
                 <option value={3}>Low</option>

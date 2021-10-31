@@ -87,9 +87,9 @@ function App(props) {
                     }}>{isVisible ? "Hide Completed" : "Show Completed"}</button>
                     <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button>
                 </div>
-                <div>
-                    <label htmlFor={"sort by"}>Sort By</label>
-                    <select id={"sort by"}>
+                <div className={"sorting"}>
+                    <label id="sort" htmlFor={"sort-by"}>Sort By</label>
+                    <select id={"sort-by"}>
                         <option value={"priority"}>Priority</option>
                         <option value={"name"}>Name</option>
                         <option value={"creationDate"}>Creation Date</option>

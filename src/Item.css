@@ -4,9 +4,26 @@
 
 .item {
     font-size: 2em;
+    border: 5px solid #c299c0;
+    margin: 5px;
+    background: #c299c0;
+    box-shadow: 3px 3px #888888;
+    border-radius:20px;
 }
 
 .checkbox {
     width: 45px;
     height: 25px;
+}
+
+.editButton {
+    float: right;
+    margin: 2px;
+    background: lightblue;
+}
+
+.label {
+    font-family: "Roboto Mono Light for Powerline";
+    color: black;
+    word-wrap: break-word;
 }
