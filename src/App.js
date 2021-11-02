@@ -23,7 +23,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const collectionName = "List";
-function App(props) {
+function App() {
     const query = db.collection(collectionName);
     const [value, loading, error] = useCollection(query);
     const [isVisible, setVisibility] = useState(true);
@@ -76,6 +76,9 @@ function App(props) {
         setStoreID(itemID);
     }
 
+    function handleSort(type) {
+        db.collection(collectionName).orderBy(type);
+    }
     return (
         <div className={"todo"}>
             <div>
@@ -89,7 +92,7 @@ function App(props) {
                 </div>
                 <div className={"sorting"}>
                     <label id="sort" htmlFor={"sort-by"}>Sort By</label>
-                    <select id={"sort-by"}>
+                    <select id={"sort-by"} onChange={(e) => handleSort(e.currentTarget.value)}>
                         <option value={"priority"}>Priority</option>
                         <option value={"name"}>Name</option>
                         <option value={"creationDate"}>Creation Date</option>

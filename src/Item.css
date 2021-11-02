@@ -1,6 +1,3 @@
-.label {
-    margin-right: 20px;
-}
 
 .item {
     font-size: 2em;
@@ -17,13 +14,14 @@
 }
 
 .editButton {
-    float: right;
+    padding: 5px;
     margin: 2px;
     background: lightblue;
+
 }
 
 .label {
     font-family: "Roboto Mono Light for Powerline";
     color: black;
-    word-wrap: break-word;
+    word-break: break-all;
 }

@@ -1,4 +1,5 @@
 import {useState} from "react";
+import './Alert.css';
 
 function Alert(props) {
     const [newDesc, setNewDesc] = useState("");
@@ -18,11 +19,11 @@ function Alert(props) {
             </div>
 
             <div className="alert-buttons">
-                <button className={"alert-button alert-cancel"} type={"button"}
+                <button className={"alert-button"} type={"button"}
                         onClick={props.onClose}>
                     Cancel
                 </button>
-                <button className={"alert-button alert-ok"} type={"button"}
+                <button className={"alert-button"} type={"button"}
                         onClick={() => {
                             props.onClose();
                             props.onOK(newDesc, priority);

@@ -2,7 +2,8 @@ import './Item.css';
 import Edit from "./edit_pencil.png"
 
 function Item(props) {
-    return (<div className={"item"}>
+    return (
+        <div className={"item"}>
         <input type={"checkbox"} className={"checkbox"} id={props.id} checked={props.isCompleted}
                onChange={(e) => props.onItemChange(props.id, "isCompleted", e.target.checked)}/>
         <label htmlFor={props.id} className="label" value={props.description}>{props.description}</label>
@@ -10,8 +11,7 @@ function Item(props) {
             props.onButtonClick();
             props.onPassID(props.id);
         }}/></button>
-
-    </div>);
+        </div>);
 }
 
 export default Item;
