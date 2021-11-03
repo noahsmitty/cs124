@@ -25,7 +25,8 @@ const db = firebase.firestore();
 const collectionName = "List";
 function App() {
     const query = db.collection(collectionName);
-    const [value, loading, error] = useCollection(query);
+    const [sortVal, setSortVal] = useState("description")
+    const [value, loading, error] = useCollection(query.orderBy(sortVal, "asc"));
     const [isVisible, setVisibility] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
     const [storeID, setStoreID] = useState("");
@@ -92,9 +93,9 @@ function App() {
                 </div>
                 <div className={"sorting"}>
                     <label id="sort" htmlFor={"sort-by"}>Sort By</label>
-                    <select id={"sort-by"} onChange={(e) => handleSort(e.currentTarget.value)}>
+                    <select id={"sort-by"} onChange={(e) => setSortVal(e.currentTarget.value)}>
                         <option value={"priority"}>Priority</option>
-                        <option value={"name"}>Name</option>
+                        <option value={"description"}>Name</option>
                         <option value={"creationDate"}>Creation Date</option>
                     </select>
                 </div>
