@@ -28,6 +28,7 @@ function App() {
     const [sortVal, setSortVal] = useState("description")
     const [value, loading, error] = useCollection(query.orderBy(sortVal, "asc"));
     const [isVisible, setVisibility] = useState(true);
+    const [isHide, setHide] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [storeID, setStoreID] = useState("");
 
@@ -51,6 +52,7 @@ function App() {
     // handles checkboxes
     function handleItemChange(itemID, field, value) {
         const doc = db.collection(collectionName).doc(itemID);
+        setHide(!isHide);
         doc.update({
             [field]: value,
         })
@@ -67,6 +69,7 @@ function App() {
 
     function handleDelete() {
         data.forEach((item) => item.isCompleted && db.collection(collectionName).doc(item.id).delete());
+        setHide(!isHide);
     }
 
     function toggleModal() {
@@ -83,10 +86,10 @@ function App() {
                 <h1>TO-DO LIST</h1>
 
                 <div className={isVisible ? "visible" : null}>
-                    <button className={"button"} type={"button"} onClick={() => {
+                    {isHide ? <button className={"button"} type={"button"} onClick={() => {
                         setVisibility(!isVisible);
-                    }}>{isVisible ? "Hide Completed" : "Show Completed"}</button>
-                    {isVisible ? <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button> : null}
+                    }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
+                    {isVisible && isHide ? <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button> : null}
                 </div>
                 <div className={"sorting"}>
                     <label id="sort" htmlFor={"sort-by"}>Sort By</label>
