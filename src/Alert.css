@@ -1,0 +1,52 @@
+.backdrop {
+    position: fixed;
+    top:0;
+    left: 0;
+    bottom: 400pt;
+    right: 300pt;
+    width: 300pt;
+    height: 640pt;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.modal {
+    background-color: #fff;
+    border-radius: 20pt  ;
+    border-color: black;
+    border-style: solid;
+    margin: 0 auto;
+    top: 150pt;
+    right: 20pt;
+    height: 100pt;
+    width: 200pt;
+    padding: 10pt;
+    position: relative;
+}
+
+.text {
+    /*margin: 10px 10px 10px 15px;*/
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 3px solid #A4E0EB;
+    border-radius: 20px;
+    padding: 3px;
+    background: #A4E0EB;
+}
+
+.alert-buttons {
+    margin-left: 20px;
+}
+.alert-button {
+    margin-right: 10px;
+    background: #DEAFA6;
+    color: black;
+    border-radius:20px;
+    text-shadow:none;
+}
+
+.select {
+    border: 2px solid #DEAFA6;
+    background: white;
+    border-radius:20px;
+    align-items: center;
+}

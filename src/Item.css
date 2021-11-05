@@ -1,0 +1,36 @@
+
+.item {
+    font-size: 2em;
+    margin: 5px;
+    box-shadow: 3px 3px #888888;
+}
+
+.high {
+    background: #E6676B;
+
+}
+
+.medium {
+background: #FFF67D;
+}
+
+.low {
+background: #8AE3A8;
+}
+.checkbox {
+    width: 45px;
+    height: 25px;
+}
+
+.editButton {
+    padding: 5px;
+    margin: 2px;
+    background: #DEAFA6;
+
+}
+
+.label {
+    font-family: "Roboto Mono Light for Powerline";
+    color: black;
+    word-break: break-all;
+}
