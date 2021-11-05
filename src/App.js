@@ -77,9 +77,6 @@ function App() {
         setStoreID(itemID);
     }
 
-    function handleSort(type) {
-        db.collection(collectionName).orderBy(type);
-    }
     return (
         <div className={"todo"}>
             <div>
@@ -100,7 +97,6 @@ function App() {
                     </select>
                 </div>
                 <AddTask data={data} onSubmit={addData}/>
-                {/*{[...data].sort((a, b) => a.priority - b.priority).map(item => (item.priority))}*/}
                 {data && <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))}
                       onItemChange={handleItemChange} onButtonClick={toggleModal} onPassID={onChangeID}></List>}
             </div>

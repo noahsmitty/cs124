@@ -11,7 +11,7 @@ function Alert(props) {
             <div className={"text"}>
                 <input type={"text"} placeholder={"Enter New Description"}
                        onChange={(e) => setNewDesc(e.currentTarget.value)}/>
-                <select onChange={(e) => setPriority(e.currentTarget.value)}>
+                <select className={"select"} onChange={(e) => setPriority(e.currentTarget.value)}>
                     <option value={1}>High</option>
                     <option value={2}>Medium</option>
                     <option value={3}>Low</option>
