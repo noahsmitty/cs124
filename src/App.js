@@ -89,7 +89,7 @@ function App() {
                     <button className={"button"} type={"button"} onClick={() => {
                         setVisibility(!isVisible);
                     }}>{isVisible ? "Hide Completed" : "Show Completed"}</button>
-                    <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button>
+                    {isVisible ? <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button> : null}
                 </div>
                 <div className={"sorting"}>
                     <label id="sort" htmlFor={"sort-by"}>Sort By</label>
