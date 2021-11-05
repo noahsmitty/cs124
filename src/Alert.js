@@ -3,7 +3,7 @@ import './Alert.css';
 
 function Alert(props) {
     const [newDesc, setNewDesc] = useState("");
-    const [priority, setPriority] = useState(1);
+    const [priority, setPriority] = useState("1");
 
     return <div className={"backdrop"}>
         <div className="modal">

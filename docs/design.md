@@ -5,23 +5,45 @@ Authors:
 ## Our Design Decisions
 ----
 ### 1. ADD TASK
-For our add task, we decided on a text input component with a button next to it that reads "Add Task". We also added a placeholder that read "task description" that would provide one more hint to the user who would be looking to add a task.
+For our add task component, we've moved it to the top of the page because as the number of tasks
+grow, we would have to scroll all the way down if we wanted to add a new task. By moving it to the top, it is easier to add tasks
+and given that adding a task might be a task that a user might want to do first and more frequently, this design change made sense to us.
+![](../src/images/ss1.png)![](../src/images/ss1.1.png)
 
-### 2. NEW TASKS
-For our new tasks, we would add them to the top of the list.
+### 2. EDIT/RENAME TASK
+For editing/renaming a task, we have a button with a marker pen next to all the tasks.
 
-<img src="lab1/wf1.jpg"/>
+Upon clicking on the edit button, an alert pops up which takes over the screen. It has an 
+input field to change the description to, a priority selector and two buttons, one to confirm (OK),
+the other to cancel the changes.
 
-### 3. EDIT/RENAME TASK
-For the renaming a task, we added an edit icon (marker) next to the tasks. Some alternate designs we considered were adding an edit button on top and a save button at the bottom. Another idea we had was to add an edit button next to every task. But we decided on an icon, which would be more intuitive, more in line with the conventions and simple and better looking.
+![](../src/images/ss2.png)![](../src/images/ss2.2.png)
 
-After a user clicks on the edit icon, the task description would turn into a text input component where the user has the option to rename the description. Alongside the text input would be a green checkmark icon which would be clicked on when the user is done renaming the task description. An alternate design idea we had was to just use the return/enter key to save but we decided on the green checkmark because it is more visual and thus more intuitive. 
+### 3. SHOW ALL/DELETE ALL
+Hide Completed and Deleted Completed buttons operate on the same list of completed tasks.
+The buttons don't show up initially when no tasks are selected.
+![](../src/images/ss3.png)
 
-<img src="lab1/wf2.jpg"/>
-<img src="lab1/wf3.jpg"/>
+When an item is selected, both Hide Selected and Delete Selected buttons show up because both are valid options and operations that we can perform on the selected item.
+![](../src/images/ss7.png)
 
-### 4. SHOW ALL/DELETE ALL
-For the show all uncompleted tasks and delete all completed tasks, we decided to unify them and make it consistent so that the buttons would commit an action on the same list (i.e completed tasks). Instead of show all uncompleted tasks, our interface would just hide all completed tasks and when the completed tasks are hidden there would be an option to show the hidden tasks. Initially we didn't think about the show hidden button, which would mean that hiding and deleting are doing the same thing. Alternate design ideas included having the show all uncompleted tasks and delete all above the add tasks components which we ditched in favor of performing actions on the same list/set of items. If the selected items are deleted, we also grey out the buttons.
+When the completed tasks are hidden, only the show completed button will be available because we don't want to unintentionally delete a large number of items without knowing what we are deleting.
+![](../src/images/ss8.png)
 
-<img src="lab1/wf4.jpg"/>
+
+### 4. PRIORITY AND SORTING
+For the Priority task, we decide on 3 levels of priority, i.e High, Low and Medium. They are 
+portrayed by what color the task is. Red is High, Yellow is Medium and green is low priority. 
+
+![](../src/images/ss6.png)
+
+There are 3 options to sort the list of tasks by. They can be selected from a dropdown menu as such:
+
+![](../src/images/ss4.png)
+
+Selecting either Priority, Name or creation date should give you a list of tasks sorted by the selected parameter.
+![](../src/images/ss5.png)
+
+![](../src/images/ss6.png)
+
 
