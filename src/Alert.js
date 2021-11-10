@@ -9,7 +9,7 @@ function Alert(props) {
         <div className="modal">
             Enter a new name for your item:
             <div className={"text"}>
-                <input type={"text"} placeholder={"Enter New Description"}
+                <input type={"text"} className={"enter_description"} placeholder={"Enter New Description"}
                        onChange={(e) => setNewDesc(e.currentTarget.value)}/>
                 <select className={"select"} onChange={(e) => setPriority(e.currentTarget.value)}>
                     <option value={1}>High</option>

@@ -4,25 +4,28 @@
     left: 0;
     bottom: 400pt;
     right: 300pt;
-    width: 300pt;
-    height: 640pt;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, .3);
 }
 
 .modal {
     background-color: #fff;
-    border-radius: 20pt  ;
+    border-radius: 20pt;
     border-color: black;
     border-style: solid;
     margin: 0 auto;
-    top: 150pt;
-    right: 20pt;
-    height: 100pt;
-    width: 200pt;
-    padding: 10pt;
+    top: 30vh;
+    /*right: 0vw;*/
+    height: 20vh;
+    width: 70vw;
+    padding: 5pt;
     position: relative;
 }
 
+.enter_description {
+    width: 65%;
+}
 .text {
     /*margin: 10px 10px 10px 15px;*/
     margin-top: 5px;

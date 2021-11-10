@@ -25,6 +25,11 @@ const db = firebase.firestore();
 const collectionName = "List";
 
 // Need to add functionalities for multiple list and support for mobile/desktop/portrait, landscape
+
+// tabs for multiple lists (categories)
+// different collectionNames according to categories
+// all other functionalities are the same
+
 function App(props) {
     const query = db.collection(collectionName);
     const [sortVal, setSortVal] = useState("description")
