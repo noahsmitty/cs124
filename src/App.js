@@ -32,7 +32,7 @@ const collectionName = "List";
 
 function App(props) {
     const query = db.collection(collectionName);
-    const [sortVal, setSortVal] = useState("description")
+    const [sortVal, setSortVal] = useState("priority")
     const [value, loading, error] = useCollection(query.orderBy(sortVal, "asc"));
     const [isVisible, setVisibility] = useState(true);
     const [showAlert, setShowAlert] = useState(false);

@@ -8,15 +8,17 @@ export default function AddTask(props) {
 
     return (
         <div className={"center"} id="list">
-            <input type="text" id="task-description" className={"taskinput"} placeholder="task description"
-                   onChange={(e) => setDescription(e.currentTarget.value)}/>
+            <input type="text" id="task-description" className={"taskinput"} placeholder="task description" value={description}
+                   onChange={(e) =>
+                       setDescription(e.currentTarget.value)}/>
             <select id="priority" onChange={(e) => setPriority(e.currentTarget.value)}>
                 <option value={1}>High</option>
                 <option value={2}>Medium</option>
                 <option value={3}>Low</option>
             </select>
             <input className={"button"} type="submit" id="submit-task" value="add task"
-                   onClick={() => props.onSubmit(description, priority)
+                   onClick={() => {props.onSubmit(description, priority);
+                       setDescription('');}
                    }/>
         </div>
     );
