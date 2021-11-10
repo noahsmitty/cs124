@@ -8,7 +8,7 @@ function Alert(props) {
     return <div className={"backdrop"}>
         <div className="modal">
             Enter a new name for your item:
-            <div className={"text"}>
+            <div className={"center text"}>
                 <input type={"text"} className={"enter_description"} placeholder={"Enter New Description"}
                        onChange={(e) => setNewDesc(e.currentTarget.value)}/>
                 <select className={"select"} onChange={(e) => setPriority(e.currentTarget.value)}>

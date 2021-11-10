@@ -7,8 +7,8 @@ export default function AddTask(props) {
     const [priority, setPriority] = useState("1");
 
     return (
-        <div id="list">
-            <input type="text" id="task-description" placeholder="task description"
+        <div className={"center"} id="list">
+            <input type="text" id="task-description" className={"taskinput"} placeholder="task description"
                    onChange={(e) => setDescription(e.currentTarget.value)}/>
             <select id="priority" onChange={(e) => setPriority(e.currentTarget.value)}>
                 <option value={1}>High</option>
