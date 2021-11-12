@@ -30,7 +30,7 @@ const collectionName = "List";
 // different collectionNames according to categories
 // all other functionalities are the same
 
-function App(props) {
+function App() {
     const query = db.collection(collectionName);
     const [sortVal, setSortVal] = useState("priority")
     const [value, loading, error] = useCollection(query.orderBy(sortVal, "asc"));
