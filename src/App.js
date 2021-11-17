@@ -3,9 +3,12 @@ import './App.css';
 import {useState} from "react";
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import AddTask from "./AddTask";
-import Alert from "./Alert";
+import AddCategory from "./AddCategory";
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
+import ListItem from "./ListItem";
+import Edit from "./edit_pencil.png";
+import TaskList from "./TaskList";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -32,84 +35,44 @@ const collectionName = "List";
 
 function App() {
     const query = db.collection(collectionName);
-    const [sortVal, setSortVal] = useState("priority")
-    const [value, loading, error] = useCollection(query.orderBy(sortVal, "asc"));
-    const [isVisible, setVisibility] = useState(true);
-    const [showAlert, setShowAlert] = useState(false);
-    const [storeID, setStoreID] = useState("");
+    const [value, loading, error] = useCollection(query);
+    const [category, setCategory] = useState("List");
 
     let data = [];
     if (value) {
         data = value.docs.map((doc) => {
-            return {...doc.data()}});
+            return {...doc.data()}
+        });
     }
-    function addData(description, priority) {
+
+    function addData(cat) {
         const item = {
             id: generateUniqueID(),
-            description: description,
-            isCompleted: false,
-            creationDate: Date.now(),
-            priority: priority,
+            category: cat
         };
         const docRef = query.doc(item.id);
         docRef.set(item);
     }
 
-    // handles checkboxes
-    function handleItemChange(itemID, field, value) {
-        const doc = db.collection(collectionName).doc(itemID);
-        doc.update({
-            [field]: value,
-        })
-    }
-
-    // handles editing an item
-    function handleEditItem(description, priority) {
-        const doc = db.collection(collectionName).doc(storeID);
-        doc.update({
-            description: description,
-            priority: priority,
-        })
-    }
-
-    function handleDelete() {
-        data.forEach((item) => item.isCompleted && db.collection(collectionName).doc(item.id).delete());
-    }
-
-    function toggleModal() {
-        setShowAlert(!showAlert);
-    }
-
-    function onChangeID(itemID) {
-        setStoreID(itemID);
+    function changeCategory(cat) {
+        setCategory(cat);
+        console.log(cat);
     }
 
     return (
-        <div className={"todo"}>
-            <div>
-                <h1>TO-DO LIST</h1>
 
-                <div className={isVisible ? "visible" : null}>
-                    {data.filter((item) => item.isCompleted).length > 0 ? <button className={"button"} type={"button"} onClick={() => {
-                        setVisibility(!isVisible);
-                    }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
-                    {isVisible && data.filter((item) => item.isCompleted).length > 0 ? <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button> : null}
-                </div>
-                <div className={"sorting"}>
-                    <label id="sort" htmlFor={"sort-by"}>Sort By</label>
-                    <select id={"sort-by"} onChange={(e) => setSortVal(e.currentTarget.value)}>
-                        <option value={"priority"}>Priority</option>
-                        <option value={"description"}>Name</option>
-                        <option value={"creationDate"}>Creation Date</option>
-                    </select>
-                </div>
-                <AddTask data={data} onSubmit={addData}/>
-                {data && <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))}
-                      onItemChange={handleItemChange} onButtonClick={toggleModal} onPassID={onChangeID}></List>}
-            </div>
-            {showAlert && <Alert onClose={toggleModal} onOK={handleEditItem}/>}
+
+        <div className={"todo"}>
+            <div></div>
+            <h1>TO-DO LIST</h1>
+            <AddCategory onSubmit={addData}></AddCategory>
+
+            {category === "List" ?
+                data.map(item => <ListItem category={item.category} onClick={changeCategory}></ListItem>)
+             : <TaskList collectionName={category} db={db}></TaskList>}
+            {/*<TaskList collectionName={proxps.category} db={props.db}></TaskList>*/}
         </div>
-    );
+    )
 }
 
 export default App;
