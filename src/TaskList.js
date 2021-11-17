@@ -6,13 +6,16 @@ import List from "./List";
 import Alert from "./Alert";
 import App from "./App";
 
-
+const collectionName = "List";
 function TaskList(props) {
-    const collectionName = props.collectionName;
+    const taskName = props.taskName;
     const db = props.db;
-    const query = db.collection(collectionName);
+    const task = db.collection(collectionName).doc(props.id).collection(taskName);
+    // in usecollection, get everything without the last .doc().
+    // the id is the listID, collection is "list", task would be what they input.
+    // const query = db.collection(collectionName);
     const [sortVal, setSortVal] = useState("description")
-    const [value, loading, error] = useCollection(query.orderBy(sortVal, "asc"));
+    const [value, loading, error] = useCollection(task.orderBy(sortVal, "asc"));
     const [isVisible, setVisibility] = useState(true);
     const [showAlert, setShowAlert] = useState(false);
     const [storeID, setStoreID] = useState("");
@@ -30,7 +33,7 @@ function TaskList(props) {
             creationDate: Date.now(),
             priority: priority,
         };
-        const docRef = query.doc(item.id);
+        const docRef = task.doc(item.id);
         docRef.set(item);
     }
 
@@ -66,7 +69,7 @@ function TaskList(props) {
     return (
         <div>
             <div>
-
+                <button className={"button"} onClick={props.goBack}>Back</button>
                 <div className={isVisible ? "visible" : null}>
                     {data.filter((item) => item.isCompleted).length > 0 ? <button className={"button"} type={"button"} onClick={() => {
                         setVisibility(!isVisible);

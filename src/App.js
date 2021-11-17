@@ -36,7 +36,9 @@ const collectionName = "List";
 function App() {
     const query = db.collection(collectionName);
     const [value, loading, error] = useCollection(query);
-    const [category, setCategory] = useState("List");
+    // const [category, setCategory] = useState("List");
+    const [listId, setListId] = useState("");
+    const [task, setTask] = useState("home");
 
     let data = [];
     if (value) {
@@ -48,29 +50,54 @@ function App() {
     function addData(cat) {
         const item = {
             id: generateUniqueID(),
-            category: cat
+            taskName: cat,
+            isSelected: false,
         };
         const docRef = query.doc(item.id);
         docRef.set(item);
     }
 
-    function changeCategory(cat) {
-        setCategory(cat);
-        console.log(cat);
+    // handles checkboxes
+    function handleItemChange(itemID, field, value) {
+        const doc = db.collection(collectionName).doc(itemID);
+        doc.update({
+            [field]: value,
+        })
     }
+
+    function handleEditList(cat) {
+        const doc = db.collection(collectionName).doc(listId);
+        doc.update({
+            category: cat,
+        })
+    }
+
+    function changeCategory(task, listId) {
+        setListId(listId);
+        setTask(task);
+        console.log(listId);
+    }
+
 
     return (
 
 
         <div className={"todo"}>
-            <div></div>
             <h1>TO-DO LIST</h1>
-            <AddCategory onSubmit={addData}></AddCategory>
 
-            {category === "List" ?
-                data.map(item => <ListItem category={item.category} onClick={changeCategory}></ListItem>)
-             : <TaskList collectionName={category} db={db}></TaskList>}
-            {/*<TaskList collectionName={proxps.category} db={props.db}></TaskList>*/}
+
+            {task === "home" ?
+                <div>
+                    <AddCategory onSubmit={addData}/>
+                    {data.map(item =>
+                        <div>
+                            <ListItem taskName={item.category} onClick={changeCategory} handleItemChange={handleItemChange}/>
+
+                        </div>)}
+                </div>
+             : <TaskList taskName={task} db={db} goBack={() => setTask("home")}/>}
+            {console.log(task)}
+            {/*goBack={() => setCategory("List")}*/}
         </div>
     )
 }
