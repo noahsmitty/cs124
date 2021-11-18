@@ -6,7 +6,7 @@ function List(props) {
             {props.todo.map(item =>
                 <Item key={item.id} id={item.id} description={item.description} isCompleted={item.isCompleted}
                       date={item.creationDate} priority={item.priority} onItemChange={props.onItemChange}
-                      onButtonClick={() => props.onButtonClick()}
+                      onButtonClick={props.onButtonClick}
                       onPassID={props.onPassID}/>)}
         </div>
     );

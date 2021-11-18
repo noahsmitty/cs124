@@ -7,24 +7,26 @@ import Alert from "./Alert";
 import App from "./App";
 
 const collectionName = "List";
+
 function TaskList(props) {
-    const taskName = props.taskName;
     const db = props.db;
-    const task = db.collection(collectionName).doc(props.id).collection(taskName);
+    const task = db.collection(collectionName).doc(props.id).collection(props.id);
     // in usecollection, get everything without the last .doc().
     // the id is the listID, collection is "list", task would be what they input.
     // const query = db.collection(collectionName);
     const [sortVal, setSortVal] = useState("description")
     const [value, loading, error] = useCollection(task.orderBy(sortVal, "asc"));
     const [isVisible, setVisibility] = useState(true);
-    const [showAlert, setShowAlert] = useState(false);
+    // const [showAlert, setShowAlert] = useState(false);
     const [storeID, setStoreID] = useState("");
 
     let data = [];
     if (value) {
         data = value.docs.map((doc) => {
-            return {...doc.data()}});
+            return {...doc.data()}
+        });
     }
+
     function addData(description, priority) {
         const item = {
             id: generateUniqueID(),
@@ -39,7 +41,7 @@ function TaskList(props) {
 
     // handles checkboxes
     function handleItemChange(itemID, field, value) {
-        const doc = db.collection(collectionName).doc(itemID);
+        const doc = db.collection(collectionName).doc(props.id).collection(props.listName).doc(itemID);
         doc.update({
             [field]: value,
         })
@@ -47,7 +49,7 @@ function TaskList(props) {
 
     // handles editing an item
     function handleEditItem(description, priority) {
-        const doc = db.collection(collectionName).doc(storeID);
+        const doc = db.collection(collectionName).doc(props.id).collection(props.listName).doc(storeID);
         doc.update({
             description: description,
             priority: priority,
@@ -55,12 +57,12 @@ function TaskList(props) {
     }
 
     function handleDelete() {
-        data.forEach((item) => item.isCompleted && db.collection(collectionName).doc(item.id).delete());
+        data.forEach((item) => item.isCompleted && db.collection(collectionName).doc(props.id).collection(props.listName).doc(item.id).delete());
     }
 
-    function toggleModal() {
-        setShowAlert(!showAlert);
-    }
+    // function toggleModal() {
+    //     setShowAlert(!showAlert);
+    // }
 
     function onChangeID(itemID) {
         setStoreID(itemID);
@@ -71,10 +73,13 @@ function TaskList(props) {
             <div>
                 <button className={"button"} onClick={props.goBack}>Back</button>
                 <div className={isVisible ? "visible" : null}>
-                    {data.filter((item) => item.isCompleted).length > 0 ? <button className={"button"} type={"button"} onClick={() => {
-                        setVisibility(!isVisible);
-                    }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
-                    {isVisible && data.filter((item) => item.isCompleted).length > 0 ? <button className={"button"} type={"button"} onClick={handleDelete}>Delete Completed</button> : null}
+                    {data.filter((item) => item.isCompleted).length > 0 ?
+                        <button className={"button"} type={"button"} onClick={() => {
+                            setVisibility(!isVisible);
+                        }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
+                    {isVisible && data.filter((item) => item.isCompleted).length > 0 ?
+                        <button className={"button"} type={"button"} onClick={handleDelete}>Delete
+                            Completed</button> : null}
                 </div>
                 <div className={"sorting"}>
                     <label id="sort" htmlFor={"sort-by"}>Sort By</label>
@@ -86,9 +91,9 @@ function TaskList(props) {
                 </div>
                 <AddTask data={data} onSubmit={addData}/>
                 {data && <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))}
-                               onItemChange={handleItemChange} onButtonClick={toggleModal} onPassID={onChangeID}></List>}
+                               onItemChange={handleItemChange} onButtonClick={props.toggleModal} onPassID={onChangeID}/>}
             </div>
-            {showAlert && <Alert onClose={toggleModal} onOK={handleEditItem}/>}
+            {props.showAlert && <Alert type={"task"} onClose={props.toggleModal} onOK={handleEditItem} id={null}/>}
         </div>
     );
 }

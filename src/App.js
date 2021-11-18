@@ -9,6 +9,7 @@ import {useCollection} from "react-firebase-hooks/firestore";
 import ListItem from "./ListItem";
 import Edit from "./edit_pencil.png";
 import TaskList from "./TaskList";
+import Alert from "./Alert";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -36,9 +37,9 @@ const collectionName = "List";
 function App() {
     const query = db.collection(collectionName);
     const [value, loading, error] = useCollection(query);
-    // const [category, setCategory] = useState("List");
     const [listId, setListId] = useState("");
-    const [task, setTask] = useState("home");
+    const [page, setPage] = useState("home");
+    const [showAlert, setShowAlert] = useState(false);
 
     let data = [];
     if (value) {
@@ -47,59 +48,59 @@ function App() {
         });
     }
 
-    function addData(cat) {
+    function addData(list) {
         const item = {
             id: generateUniqueID(),
-            taskName: cat,
-            isSelected: false,
+            listName: list,
         };
         const docRef = query.doc(item.id);
         docRef.set(item);
     }
 
-    // handles checkboxes
-    function handleItemChange(itemID, field, value) {
-        const doc = db.collection(collectionName).doc(itemID);
+    function handleEditList(list, id) {
+        console.log(id);
+        const doc = db.collection(collectionName).doc(id);
         doc.update({
-            [field]: value,
+            listName: list,
         })
     }
 
-    function handleEditList(cat) {
-        const doc = db.collection(collectionName).doc(listId);
-        doc.update({
-            category: cat,
-        })
+    function handleDeleteList(id) {
+       db.collection(collectionName).doc(id).delete();
+       console.log('delete called');
     }
 
-    function changeCategory(task, listId) {
-        setListId(listId);
-        setTask(task);
-        console.log(listId);
+    function changeList(listName, id) {
+        setListId(id);
+        setPage(listName);
     }
 
+
+    function toggleModal() {
+        setShowAlert(!showAlert);
+    }
 
     return (
-
-
         <div className={"todo"}>
             <h1>TO-DO LIST</h1>
 
 
-            {task === "home" ?
+            {page === "home" ?
                 <div>
                     <AddCategory onSubmit={addData}/>
                     {data.map(item =>
                         <div>
-                            <ListItem taskName={item.category} onClick={changeCategory} handleItemChange={handleItemChange}/>
-
+                            <ListItem listName={item.listName} onClickItem={changeList}
+                                      handleDeleteList={handleDeleteList} toggleModal={toggleModal}
+                                      id={item.id} handleEditList={handleEditList} showAlert={showAlert}
+                            />
                         </div>)}
                 </div>
-             : <TaskList taskName={task} db={db} goBack={() => setTask("home")}/>}
-            {console.log(task)}
-            {/*goBack={() => setCategory("List")}*/}
+                : <TaskList listName={page} db={db} goBack={() => setPage("home")} id={listId}
+                            toggleModal={toggleModal} modalType={"task"} showAlert={showAlert}
+                />}
         </div>
-    )
+)
 }
 
 export default App;
