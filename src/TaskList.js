@@ -13,11 +13,9 @@ function TaskList(props) {
     const task = db.collection(collectionName).doc(props.id).collection(props.id);
     // in usecollection, get everything without the last .doc().
     // the id is the listID, collection is "list", task would be what they input.
-    // const query = db.collection(collectionName);
     const [sortVal, setSortVal] = useState("description")
     const [value, loading, error] = useCollection(task.orderBy(sortVal, "asc"));
     const [isVisible, setVisibility] = useState(true);
-    // const [showAlert, setShowAlert] = useState(false);
     const [storeID, setStoreID] = useState("");
 
     let data = [];
@@ -42,10 +40,6 @@ function TaskList(props) {
     // handles checkboxes
     function handleItemChange(itemID, field, value) {
         const doc = task.doc(itemID);
-        console.log("props.id: ", props.id);
-        console.log("props.listName: ", props.listName);
-        console.log("itemID ", itemID);
-        console.log("field ", );
         doc.update({
             [field]: value,
         })
@@ -63,10 +57,6 @@ function TaskList(props) {
     function handleDelete() {
         data.forEach((item) => item.isCompleted && task.doc(item.id).delete());
     }
-
-    // function toggleModal() {
-    //     setShowAlert(!showAlert);
-    // }
 
     function onChangeID(itemID) {
         setStoreID(itemID);

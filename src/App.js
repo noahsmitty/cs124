@@ -83,8 +83,6 @@ function App() {
     return (
         <div className={"todo"}>
             <h1>TO-DO LIST</h1>
-
-
             {page === "home" ?
                 <div>
                     <AddCategory onSubmit={addData}/>
