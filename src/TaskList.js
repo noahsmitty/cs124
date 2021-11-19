@@ -41,7 +41,11 @@ function TaskList(props) {
 
     // handles checkboxes
     function handleItemChange(itemID, field, value) {
-        const doc = db.collection(collectionName).doc(props.id).collection(props.listName).doc(itemID);
+        const doc = task.doc(itemID);
+        console.log("props.id: ", props.id);
+        console.log("props.listName: ", props.listName);
+        console.log("itemID ", itemID);
+        console.log("field ", );
         doc.update({
             [field]: value,
         })
@@ -49,7 +53,7 @@ function TaskList(props) {
 
     // handles editing an item
     function handleEditItem(description, priority) {
-        const doc = db.collection(collectionName).doc(props.id).collection(props.listName).doc(storeID);
+        const doc = task.doc(storeID);
         doc.update({
             description: description,
             priority: priority,
@@ -57,7 +61,7 @@ function TaskList(props) {
     }
 
     function handleDelete() {
-        data.forEach((item) => item.isCompleted && db.collection(collectionName).doc(props.id).collection(props.listName).doc(item.id).delete());
+        data.forEach((item) => item.isCompleted && task.doc(item.id).delete());
     }
 
     // function toggleModal() {
