@@ -82,9 +82,10 @@ function App() {
 
     return (
         <div className={"todo"}>
-            <h1>TO-DO LIST</h1>
+
             {page === "home" ?
                 <div>
+                    <h1>TO-DO LIST</h1>
                     <AddCategory onSubmit={addData}/>
                     {data.map(item =>
                         <div>
@@ -94,9 +95,13 @@ function App() {
                             />
                         </div>)}
                 </div>
-                : <TaskList listName={page} db={db} goBack={() => setPage("home")} id={listId}
-                            toggleModal={toggleModal} modalType={"task"} showAlert={showAlert}
-                />}
+                :
+                <div>
+                    <h1>{page}</h1>
+                    <TaskList listName={page} db={db} goBack={() => setPage("home")} id={listId}
+                                toggleModal={toggleModal} modalType={"task"} showAlert={showAlert}
+                    />
+                </div>}
         </div>
 )
 }

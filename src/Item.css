@@ -26,8 +26,22 @@ background: #8AE3A8;
     padding: 5px;
     margin: 2px;
     background: #DEAFA6;
-
 }
+
+.deleteButton {
+    padding: 5px;
+    margin: 2px;
+    background: white;
+}
+
+.listButton {
+    font-family: "Roboto Mono Light for Powerline";
+    font-size: large;
+    padding: 10px;
+    margin: 2px;
+    background: white;
+}
+
 
 .label {
     font-family: "Roboto Mono Light for Powerline";

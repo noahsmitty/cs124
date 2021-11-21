@@ -4,7 +4,6 @@ import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
 import AddTask from "./AddTask";
 import List from "./List";
 import Alert from "./Alert";
-import App from "./App";
 
 const collectionName = "List";
 

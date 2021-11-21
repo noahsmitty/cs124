@@ -7,8 +7,9 @@ import Alert from "./Alert";
 function ListItem(props) {
 
     return (
-        <div className={"item"}>
-            <button className={"listButton"} htmlFor={props.id} className="label" value={props.listName}
+        <div className={"item"} >
+            <label></label>
+            <button className={"listButton"} htmlFor={props.id} value={props.listName}
                     aria-label={props.listName + " List, click to view this list"}
                    onClick={() => props.onClickItem(props.listName, props.id)}>{props.listName}</button>
             <button className={"editButton"} aria-label={"Edit List Name, click to edit the name of this list"}
