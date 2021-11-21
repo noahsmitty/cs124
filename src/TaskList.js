@@ -65,11 +65,11 @@ function TaskList(props) {
     return (
         <div>
             <div>
-                <button className={"button"} onClick={props.goBack}>Back</button>
+                <button className={"button"} onClick={props.goBack} aria-label={"Back, click to go back to the overall list page"}>Back</button>
                 <div className={isVisible ? "visible" : null}>
                     {data.filter((item) => item.isCompleted).length > 0 ?
-                        <button className={"button"} type={"button"} onClick={() => {
-                            setVisibility(!isVisible);
+                        <button className={"button"} type={"button"}
+                                onClick={() => {setVisibility(!isVisible);
                         }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
                     {isVisible && data.filter((item) => item.isCompleted).length > 0 ?
                         <button className={"button"} type={"button"} onClick={handleDelete}>Delete
@@ -78,9 +78,9 @@ function TaskList(props) {
                 <div className={"sorting"}>
                     <label id="sort" htmlFor={"sort-by"}>Sort By</label>
                     <select id={"sort-by"} onChange={(e) => setSortVal(e.currentTarget.value)}>
-                        <option value={"priority"}>Priority</option>
-                        <option value={"description"}>Name</option>
-                        <option value={"creationDate"}>Creation Date</option>
+                        <option value={"priority"} aria-label={"Sort by Priority"}>Priority</option>
+                        <option value={"description"} aria-label={"Sort by Name"}>Name</option>
+                        <option value={"creationDate"} aria-label={"Sort by Creation Date"}>Creation Date</option>
                     </select>
                 </div>
                 <AddTask data={data} onSubmit={addData}/>

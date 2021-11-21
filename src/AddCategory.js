@@ -8,9 +8,9 @@ function AddCategory(props) {
 
     return (
         <div>
-            <input type="text" id="task-description" placeholder="add category" value={category}
+            <input type="text" id="task-description" placeholder="add category" aria-label={"type the name of your new list"} value={category}
                    onChange={(e) => setCategory(e.currentTarget.value)}/>
-            <input className={"button"} type={"submit"} onClick={() => {props.onSubmit(category); setCategory("")}}/>
+            <input className={"button"} type={"button"} value={"Add List"} aria-label={"Add List button"} onClick={() => {props.onSubmit(category); setCategory("")}}/>
         </div>
     );
 }

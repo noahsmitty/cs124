@@ -14,11 +14,12 @@ function Alert(props) {
                     Enter a new name for your item:
                     <div className={"center text"}>
                         <input type={"text"} className={"enter_description"} placeholder={"Enter New Description"}
+                               aria-label={"Enter new task name"}
                                onChange={(e) => setNewDesc(e.currentTarget.value)}/>
                         <select className={"select"} onChange={(e) => setPriority(e.currentTarget.value)}>
-                            <option value={1}>High</option>
-                            <option value={2}>Medium</option>
-                            <option value={3}>Low</option>
+                            <option value={1} aria-label={"High Priority"}>High</option>
+                            <option value={2} aria-label={"Medium Priority"}>Medium</option>
+                            <option value={3} aria-label={"Low Priority"}>Low</option>
                         </select>
                     </div>
 
@@ -41,6 +42,7 @@ function Alert(props) {
                 Enter a new name for your list:
                 <div className={"center text"}>
                     <input type={"text"} className={"enter_description"} placeholder={"Enter New Description"}
+                           aria-label={"Enter a new name for your list"}
                            onChange={(e) => setNewDesc(e.currentTarget.value)}/>
                 </div>
 

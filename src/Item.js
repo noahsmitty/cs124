@@ -7,13 +7,18 @@ function Item(props) {
             <div className={props.priority === "1" ? "high"
                 : props.priority === "2" ? "medium"
                     : "low"}>
-        <input type={"checkbox"} className={"checkbox"} id={props.id} checked={props.isCompleted}
-               onChange={(e) => props.onItemChange(props.id, "isCompleted", e.target.checked)}/>
-        <label htmlFor={props.id} className="label" value={props.description}>{props.description}</label>
-        <button className={"editButton"}><img src={Edit} height={"25"} width={"25"} alt={"edit-icon"} className={"edit"} onClick={() => {
-            props.onButtonClick();
-            props.onPassID(props.id);
-        }}/></button>
+                <input type={"checkbox"} className={"checkbox"} id={props.id} checked={props.isCompleted}
+                       onChange={(e) => props.onItemChange(props.id, "isCompleted", e.target.checked)}/>
+                <label htmlFor={props.id} className="label" value={props.description}>{props.description}</label>
+                <button className={"editButton"} aria-label={"Edit Task, click to edit this task"} onClick={() => {
+                    props.onButtonClick();
+                    props.onPassID(props.id);
+                }}><img src={Edit}
+                        height={"25"}
+                        width={"25"}
+                        alt={"edit-icon"}
+                        className={"edit"}
+                /></button>
             </div>
         </div>);
 }
