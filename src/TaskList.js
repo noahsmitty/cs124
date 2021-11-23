@@ -12,10 +12,10 @@ function TaskList(props) {
     const task = db.collection(collectionName).doc(props.id).collection(props.id);
     // in usecollection, get everything without the last .doc().
     // the id is the listID, collection is "list", task would be what they input.
-    const [sortVal, setSortVal] = useState("description")
+    const [sortVal, setSortVal] = useState("priority")
     const [value, loading, error] = useCollection(task.orderBy(sortVal, "asc"));
     const [isVisible, setVisibility] = useState(true);
-    const [storeID, setStoreID] = useState("");
+    const [selectedTaskId, setSelectedTaskId] = useState("");
 
     let data = [];
     if (value) {
@@ -47,19 +47,19 @@ function TaskList(props) {
 
     // handles editing an item
     function handleEditItem(description, priority) {
-        const doc = task.doc(storeID);
+        const doc = task.doc(selectedTaskId);
         doc.update({
             description: description,
             priority: priority,
         })
     }
 
-    function handleDelete() {
+    function handleDeleteCompleted() {
         data.forEach((item) => item.isCompleted && task.doc(item.id).delete());
     }
 
     function onChangeID(itemID) {
-        setStoreID(itemID);
+        setSelectedTaskId(itemID);
     }
 
     return (
@@ -72,7 +72,7 @@ function TaskList(props) {
                                 onClick={() => {setVisibility(!isVisible);
                         }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
                     {isVisible && data.filter((item) => item.isCompleted).length > 0 ?
-                        <button className={"button"} type={"button"} onClick={handleDelete}>Delete
+                        <button className={"button"} type={"button"} onClick={handleDeleteCompleted}>Delete
                             Completed</button> : null}
                 </div>
                 <div className={"sorting"}>
