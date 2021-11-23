@@ -4,14 +4,14 @@ import './Alert.css';
 function Alert(props) {
     const [newDesc, setNewDesc] = useState("");
     const [priority, setPriority] = useState("1");
-    
+
     return (
         <div className={"backdrop"}>
             { props.type === "task" &&
                 <div className="modal">
                     Enter a new name for your item:
                     <div className={"center text"}>
-                        <input type={"text"}  tabIndex={0} className={"enter_description"} placeholder={"Enter New Description"}
+                        <input type={"text"} tabIndex={0} className={"enter_description"} placeholder={"Enter New Description"}
                                aria-label={"Enter new task name"}
                                onChange={(e) => setNewDesc(e.currentTarget.value)}/>
                         <select className={"select"} onChange={(e) => setPriority(e.currentTarget.value)}>
