@@ -58,7 +58,6 @@ function TaskList(props) {
             description: description,
             priority: priority,
         })
-        console.log("handle edit item called");
     }
 
     function handleDeleteCompleted() {
@@ -66,19 +65,21 @@ function TaskList(props) {
     }
 
     function onChangeID(itemID) {
-        console.log(itemID);
         setSelectedTaskId(itemID);
     }
 
     return (
         <div>
             <div>
-                <button className={"button"} onClick={props.goBack} aria-label={"Back, click to go back to the overall list page"}>Back</button>
+                <button className={"button"} onClick={props.goBack}
+                        aria-label={"Back, click to go back to the overall list page"}>Back
+                </button>
                 <div className={isVisible ? "visible" : null}>
                     {data.filter((item) => item.isCompleted).length > 0 ?
                         <button className={"button"} type={"button"}
-                                onClick={() => {setVisibility(!isVisible);
-                        }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
+                                onClick={() => {
+                                    setVisibility(!isVisible);
+                                }}>{isVisible ? "Hide Completed" : "Show Completed"}</button> : null}
                     {isVisible && data.filter((item) => item.isCompleted).length > 0 ?
                         <button className={"button"} type={"button"} onClick={handleDeleteCompleted}>Delete
                             Completed</button> : null}
@@ -93,9 +94,11 @@ function TaskList(props) {
                 </div>
                 <AddTask data={data} onSubmit={addData}/>
                 {data && <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))}
-                               onItemChange={handleItemChange} onButtonClick={props.toggleModal} onPassID={onChangeID}/>}
+                               onItemChange={handleItemChange} onButtonClick={props.toggleModal}
+                               onPassID={onChangeID}/>}
             </div>
-            {props.showAlert && taskExists && <Alert type={"task"} task={selectedTask} onClose={props.toggleModal} onOK={handleEditItem}/>}
+            {props.showAlert && taskExists &&
+            <Alert type={"task"} task={selectedTask} onClose={props.toggleModal} onOK={handleEditItem}/>}
         </div>
     );
 }

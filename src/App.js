@@ -73,7 +73,7 @@ function App() {
     }
 
     function handleDeleteList(id) {
-       db.collection(collectionName).doc(id).delete();
+        db.collection(collectionName).doc(id).delete();
     }
 
     function changeList(listName, id) {
@@ -107,12 +107,13 @@ function App() {
                 <div>
                     <h1>{page}</h1>
                     <TaskList listName={page} db={db} goBack={() => setPage("home")} id={listId}
-                                toggleModal={toggleModal} modalType={"task"} showAlert={showAlert}
+                              toggleModal={toggleModal} modalType={"task"} showAlert={showAlert}
                     />
                 </div>}
-            {page === "home" && showAlert && listExists && <Alert onClose={toggleModal} onOK={handleEditList} type={"list"} id={alertId}/>}
+            {page === "home" && showAlert && listExists &&
+            <Alert onClose={toggleModal} onOK={handleEditList} type={"list"} id={alertId}/>}
         </div>
-)
+    )
 }
 
 export default App;
