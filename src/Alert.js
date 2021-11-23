@@ -5,7 +5,8 @@ function Alert(props) {
     const [newDesc, setNewDesc] = useState("");
     const [priority, setPriority] = useState("1");
 
-    console.log("modal type is ", props.modalType)
+    // console.log("modal type is ", props.modalType)
+    console.log("id of alert:", props.id);
 
     return (
         <div className={"backdrop"}>
@@ -13,7 +14,7 @@ function Alert(props) {
                 <div className="modal">
                     Enter a new name for your item:
                     <div className={"center text"}>
-                        <input type={"text"} className={"enter_description"} placeholder={"Enter New Description"}
+                        <input type={"text"}  tabIndex={0} className={"enter_description"} placeholder={"Enter New Description"}
                                aria-label={"Enter new task name"}
                                onChange={(e) => setNewDesc(e.currentTarget.value)}/>
                         <select className={"select"} onChange={(e) => setPriority(e.currentTarget.value)}>
@@ -41,7 +42,7 @@ function Alert(props) {
             <div className="modal">
                 Enter a new name for your list:
                 <div className={"center text"}>
-                    <input type={"text"} className={"enter_description"} placeholder={"Enter New Description"}
+                    <input type={"text"} tabIndex={0} className={"enter_description"} placeholder={"Enter New Description"}
                            aria-label={"Enter a new name for your list"}
                            onChange={(e) => setNewDesc(e.currentTarget.value)}/>
                 </div>

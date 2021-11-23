@@ -22,6 +22,7 @@ function TaskList(props) {
         data = value.docs.map((doc) => {
             return {...doc.data()}
         });
+        console.log("data in taskList: ", data);
     }
 
     function addData(description, priority) {

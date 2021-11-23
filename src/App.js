@@ -40,12 +40,14 @@ function App() {
     const [listId, setListId] = useState("");
     const [page, setPage] = useState("home");
     const [showAlert, setShowAlert] = useState(false);
+    const [alertId, setAlertId] = useState(null);
 
     let data = [];
     if (value) {
         data = value.docs.map((doc) => {
             return {...doc.data()}
         });
+        console.log("data for lists:", data);
     }
 
     function addData(list) {
@@ -58,7 +60,7 @@ function App() {
     }
 
     function handleEditList(list, id) {
-        console.log(id);
+        console.log("editing item with id", id);
         const doc = db.collection(collectionName).doc(id);
         doc.update({
             listName: list,
@@ -80,6 +82,8 @@ function App() {
         setShowAlert(!showAlert);
     }
 
+
+
     return (
         <div className={"todo"}>
 
@@ -92,7 +96,9 @@ function App() {
                             <ListItem listName={item.listName} onClickItem={changeList}
                                       handleDeleteList={handleDeleteList} toggleModal={toggleModal}
                                       id={item.id} handleEditList={handleEditList} showAlert={showAlert}
+                                      setAlertId={setAlertId}
                             />
+
                         </div>)}
                 </div>
                 :
@@ -102,6 +108,7 @@ function App() {
                                 toggleModal={toggleModal} modalType={"task"} showAlert={showAlert}
                     />
                 </div>}
+            {showAlert && <Alert onClose={toggleModal} onOK={handleEditList} type={"list"} id={alertId}/>}
         </div>
 )
 }
