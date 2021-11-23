@@ -9,6 +9,8 @@ Authors:
 ### MULTIPLE LISTS
 We have added a list of lists like functionality to account for multiple lists. Initially, you land on the home page which has a list of what we're calling "lists/categories", that can be edited and deleted.
 A new category can also be added. Upon clicking on these "lists/categories", we are taken to another page where we can see the list items inside that category. 
+![](../src/images/ml1.png)
+![](../src/images/ml2.png)
 
 ----
 ### FROM LAB 3
