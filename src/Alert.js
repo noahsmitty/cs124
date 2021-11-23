@@ -13,9 +13,10 @@ function Alert(props) {
                     Enter a new name for your item:
                     <div className={"center text"}>
                         <input type={"text"} className={"enter_description"} placeholder={"Enter New Description"}
+                               value={newDesc}
                                aria-label={"Enter new task name"}
                                onChange={(e) => setNewDesc(e.currentTarget.value)}/>
-                        <select className={"select"} onChange={(e) => setPriority(e.currentTarget.value)}>
+                        <select className={"select"} value={parseInt(priority)} onChange={(e) => setPriority(e.currentTarget.value)}>
                             <option value={1} aria-label={"High Priority"}>High</option>
                             <option value={2} aria-label={"Medium Priority"}>Medium</option>
                             <option value={3} aria-label={"Low Priority"}>Low</option>
