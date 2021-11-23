@@ -57,4 +57,8 @@ Selecting either Priority, Name or creation date should give you a list of tasks
 ![](../src/images/ss6.png)
 
 
+Finally, here is a video showing how our app functions when used with just a keyboard:
+https://youtu.be/9kHzBrOLxng
 
+And here is how our app functions with Apple's Voiceover:
+https://youtu.be/gWOfVDfLQIQ
