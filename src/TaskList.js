@@ -22,7 +22,13 @@ function TaskList(props) {
         data = value.docs.map((doc) => {
             return {...doc.data()}
         });
-        console.log("data in taskList: ", data);
+    }
+    let selectedTask = data.filter((task) => task.id === selectedTaskId);
+    let taskExists;
+    if (selectedTaskId && selectedTask.length === 0) {
+        taskExists = false;
+    } else {
+        taskExists = true;
     }
 
     function addData(description, priority) {
@@ -52,6 +58,7 @@ function TaskList(props) {
             description: description,
             priority: priority,
         })
+        console.log("handle edit item called");
     }
 
     function handleDeleteCompleted() {
@@ -59,6 +66,7 @@ function TaskList(props) {
     }
 
     function onChangeID(itemID) {
+        console.log(itemID);
         setSelectedTaskId(itemID);
     }
 
@@ -87,7 +95,7 @@ function TaskList(props) {
                 {data && <List todo={isVisible ? data : data.filter(item => !(item.isCompleted))}
                                onItemChange={handleItemChange} onButtonClick={props.toggleModal} onPassID={onChangeID}/>}
             </div>
-            {props.showAlert && <Alert type={"task"} onClose={props.toggleModal} onOK={handleEditItem} id={null}/>}
+            {props.showAlert && taskExists && <Alert type={"task"} task={selectedTask} onClose={props.toggleModal} onOK={handleEditItem}/>}
         </div>
     );
 }

@@ -4,10 +4,7 @@ import './Alert.css';
 function Alert(props) {
     const [newDesc, setNewDesc] = useState("");
     const [priority, setPriority] = useState("1");
-
-    // console.log("modal type is ", props.modalType)
-    console.log("id of alert:", props.id);
-
+    
     return (
         <div className={"backdrop"}>
             { props.type === "task" &&

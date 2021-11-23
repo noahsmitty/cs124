@@ -47,7 +47,13 @@ function App() {
         data = value.docs.map((doc) => {
             return {...doc.data()}
         });
-        console.log("data for lists:", data);
+    }
+
+    let listExists;
+    if (alertId && data.filter((task) => task.id === alertId).length === 0) {
+        listExists = false;
+    } else {
+        listExists = true;
     }
 
     function addData(list) {
@@ -60,7 +66,6 @@ function App() {
     }
 
     function handleEditList(list, id) {
-        console.log("editing item with id", id);
         const doc = db.collection(collectionName).doc(id);
         doc.update({
             listName: list,
@@ -69,7 +74,6 @@ function App() {
 
     function handleDeleteList(id) {
        db.collection(collectionName).doc(id).delete();
-       console.log('delete called');
     }
 
     function changeList(listName, id) {
@@ -82,8 +86,6 @@ function App() {
         setShowAlert(!showAlert);
     }
 
-
-
     return (
         <div className={"todo"}>
 
@@ -95,7 +97,7 @@ function App() {
                         <div>
                             <ListItem listName={item.listName} onClickItem={changeList}
                                       handleDeleteList={handleDeleteList} toggleModal={toggleModal}
-                                      id={item.id} handleEditList={handleEditList} showAlert={showAlert}
+                                      id={item.id} showAlert={showAlert}
                                       setAlertId={setAlertId}
                             />
 
@@ -108,7 +110,7 @@ function App() {
                                 toggleModal={toggleModal} modalType={"task"} showAlert={showAlert}
                     />
                 </div>}
-            {showAlert && <Alert onClose={toggleModal} onOK={handleEditList} type={"list"} id={alertId}/>}
+            {page === "home" && showAlert && listExists && <Alert onClose={toggleModal} onOK={handleEditList} type={"list"} id={alertId}/>}
         </div>
 )
 }
