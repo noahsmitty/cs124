@@ -5,7 +5,6 @@ function Alert(props) {
     const [newDesc, setNewDesc] = useState("");
     const [priority, setPriority] = useState("1");
 
-    console.log("modal type is ", props.modalType)
 
     return (
         <div className={"backdrop"}>
