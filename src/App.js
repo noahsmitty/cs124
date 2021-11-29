@@ -7,9 +7,14 @@ import AddCategory from "./AddCategory";
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
 import ListItem from "./ListItem";
-import Edit from "./edit_pencil.png";
+import TabList from "./TabList";
 import TaskList from "./TaskList";
 import Alert from "./Alert";
+import {
+    useAuthState,
+    useCreateUserWithEmailAndPassword,
+    useSignInWithEmailAndPassword
+} from "react-firebase-hooks/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -26,6 +31,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+// const collectionName = "People-AuthenticationRequired";
 const collectionName = "List";
 
 // Need to add functionalities for multiple list and support for mobile/desktop/portrait, landscape
@@ -34,9 +42,14 @@ const collectionName = "List";
 // different collectionNames according to categories
 // all other functionalities are the same
 
-function App() {
-    const query = db.collection(collectionName);
-    const [value, loading, error] = useCollection(query);
+const FAKE_EMAIL = 'foo@bar.com';
+const FAKE_PASSWORD = 'xyzzyxx';
+
+
+function SignedInApp(props) {
+    const collection = db.collection(collectionName);
+    const query = collection.where('owner', "==", props.user.uid);
+    const [value, loading, error] = useCollection(collection);
     const [listId, setListId] = useState("");
     const [page, setPage] = useState("home");
     const [showAlert, setShowAlert] = useState(false);
@@ -60,20 +73,21 @@ function App() {
         const item = {
             id: generateUniqueID(),
             listName: list,
+            owner: props.user.uid
         };
-        const docRef = query.doc(item.id);
-        docRef.set(item);
+        const docRef = collection.doc(item.id);
+        docRef.set(item).catch((error) => console.log("Error occurred in add list: ", error));
     }
 
     function handleEditList(list, id) {
-        const doc = db.collection(collectionName).doc(id);
+        const doc = collection.doc(id);
         doc.update({
             listName: list,
         })
     }
 
     function handleDeleteList(id) {
-        db.collection(collectionName).doc(id).delete();
+        collection.doc(id).delete();
     }
 
     function changeList(listName, id) {
@@ -116,4 +130,77 @@ function App() {
     )
 }
 
+function SignIn() {
+    const [
+        signInWithEmailAndPassword,
+        userCredential, loading, error
+    ] = useSignInWithEmailAndPassword(auth);
+
+    if (userCredential) {
+        // Shouldn't happen because App should see that
+        // we are signed in.
+        return <div>Unexpectedly signed in already</div>
+    } else if (loading) {
+        return <p>Logging in…</p>
+    }
+    return <div>
+        {error && <p>"Error logging in: " {error.message}</p>}
+        <button onClick={() =>
+            signInWithEmailAndPassword(FAKE_EMAIL, FAKE_PASSWORD)}>Login with test user Email/PW
+        </button>
+        <button onClick={() =>
+            auth.signInWithPopup(googleProvider)}>Login with Google
+        </button>
+    </div>
+}
+
+function SignUp() {
+    const [
+        createUserWithEmailAndPassword,
+        userCredential, loading, error
+    ] = useCreateUserWithEmailAndPassword(auth);
+
+    if (userCredential) {
+        // Shouldn't happen because App should see that
+        // we are signed in.
+        return <div>Unexpectedly signed in already</div>
+    } else if (loading) {
+        return <p>Signing up…</p>
+    }
+    return <div>
+        {error && <p>"Error signing up: " {error.message}</p>}
+        <button onClick={() =>
+            createUserWithEmailAndPassword(FAKE_EMAIL, FAKE_PASSWORD)}>
+            Create test user
+        </button>
+
+    </div>
+}
+
+function App(props) {
+    const [user, loading, error] = useAuthState(auth);
+
+    function verifyEmail() {
+        auth.currentUser.sendEmailVerification();
+    }
+
+    if (loading) {
+        return <p>Checking...</p>;
+    } else if (user) {
+        return <div>
+            {user.displayName || user.email}
+            <SignedInApp {...props} user={user}/>
+            <button type="button" onClick={() => auth.signOut()}>Logout</button>
+            {!user.emailVerified && <button type="button" onClick={verifyEmail}>Verify email</button>}
+        </div>
+    } else {
+        return <>
+            {error && <p>Error App: {error.message}</p>}
+            <TabList>
+                <SignIn key="Sign In"/>
+                <SignUp key="Sign Up"/>
+            </TabList>
+        </>
+    }
+}
 export default App;
