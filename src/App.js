@@ -134,6 +134,8 @@ function SignIn() {
         signInWithEmailAndPassword,
         userCredential, loading, error
     ] = useSignInWithEmailAndPassword(auth);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     if (userCredential) {
         // Shouldn't happen because App should see that
@@ -144,21 +146,26 @@ function SignIn() {
     }
     return <div>
         {error && <p>"Error logging in: " {error.message}</p>}
+        <input type={"text"} placeholder={"Enter Username"} onChange={(e) => setUsername(e.currentTarget.value)}/>
+        <br/>
+        <input type={"password"} placeholder={"Enter Password"} onChange={(e) => setPassword(e.currentTarget.value)}/>
+        <br/>
         <button onClick={() =>
-            signInWithEmailAndPassword(FAKE_EMAIL, FAKE_PASSWORD)}>Login with test user Email/PW
+            signInWithEmailAndPassword(username, password)}>Login
         </button>
         <button onClick={() =>
             auth.signInWithPopup(googleProvider)}>Login with Google
         </button>
     </div>
 }
-
+// seems like it immediately signs you in after you sign up - do we want this?
 function SignUp() {
     const [
         createUserWithEmailAndPassword,
         userCredential, loading, error
     ] = useCreateUserWithEmailAndPassword(auth);
-
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     if (userCredential) {
         // Shouldn't happen because App should see that
         // we are signed in.
@@ -168,9 +175,14 @@ function SignUp() {
     }
     return <div>
         {error && <p>"Error signing up: " {error.message}</p>}
+
+        <input type={"text"} placeholder={"Enter Username"} onChange={(e) => setUsername(e.currentTarget.value)}/>
+        <br/>
+        <input type={"password"} placeholder={"Enter Password"} onChange={(e) => setPassword(e.currentTarget.value)}/>
+        <br/>
         <button onClick={() =>
-            createUserWithEmailAndPassword(FAKE_EMAIL, FAKE_PASSWORD)}>
-            Create test user
+            createUserWithEmailAndPassword(username, password)}>
+            Sign Up
         </button>
 
     </div>
