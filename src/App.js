@@ -36,11 +36,9 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 // const collectionName = "People-AuthenticationRequired";
 const collectionName = "List";
 
-// Need to add functionalities for multiple list and support for mobile/desktop/portrait, landscape
-
-// tabs for multiple lists (categories)
-// different collectionNames according to categories
-// all other functionalities are the same
+//TODO: 1. Sign Up and Sign In for new users
+//TODO: 2. Document sharing (Shared Task List) - Design Discussions required
+// need to add rules to firebase for this
 
 const FAKE_EMAIL = 'foo@bar.com';
 const FAKE_PASSWORD = 'xyzzyxx';
@@ -63,11 +61,12 @@ function SignedInApp(props) {
     }
 
     let listExists;
-    if (alertId && data.filter((task) => task.id === alertId).length === 0) {
-        listExists = false;
-    } else {
-        listExists = true;
-    }
+    listExists =! (alertId && data.filter((task) => task.id === alertId).length === 0);
+    // if (alertId && data.filter((task) => task.id === alertId).length === 0) {
+    //     listExists = false;
+    // } else {
+    //     listExists = true;
+    // }
 
     function addData(list) {
         const item = {
