@@ -82,11 +82,15 @@ function SignedInApp(props) {
         const doc = collection.doc(id);
         doc.update({
             listName: list,
+        }).catch((error) => {
+            console.error("Error updating List Name: ", error);
         })
     }
 
     function handleDeleteList(id) {
-        collection.doc(id).delete();
+        collection.doc(id).delete().catch((error) => {
+            console.error("Error deleting document: ", error);
+        });
     }
 
     function changeList(listName, id) {
