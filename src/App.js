@@ -34,7 +34,7 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 // const collectionName = "People-AuthenticationRequired";
-const collectionName = "List";
+const collectionName = "List-AuthenticationRequired";
 
 //TODO: 1. Sign Up and Sign In for new users
 //TODO: 2. Document sharing (Shared Task List) - Design Discussions required
@@ -71,6 +71,7 @@ function SignedInApp(props) {
             return {...doc.data()}
         });
     }
+    console.log("Data: ", data);
 
     let listExists;
     listExists =! (alertId && data.filter((task) => task.id === alertId).length === 0);
@@ -81,6 +82,7 @@ function SignedInApp(props) {
     // }
 
     function addData(list) {
+        console.log(props.user);
         const item = {
             id: generateUniqueID(),
             listName: list,
@@ -88,6 +90,7 @@ function SignedInApp(props) {
         };
         const docRef = collection.doc(item.id);
         docRef.set(item).catch((error) => console.log("Error occurred in add list: ", error));
+        console.log("item", item);
     }
 
     function handleEditList(list, id) {

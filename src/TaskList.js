@@ -5,11 +5,11 @@ import AddTask from "./AddTask";
 import List from "./List";
 import Alert from "./Alert";
 
-const collectionName = "List";
+const collectionName = "List-AuthenticationRequired";
 
 function TaskList(props) {
     const db = props.db;
-    const task = db.collection(collectionName).doc(props.id).collection(props.id);
+    const task = db.collection(collectionName).doc(props.id).collection("tasks");
     // in usecollection, get everything without the last .doc().
     // the id is the listID, collection is "list", task would be what they input.
     const [sortVal, setSortVal] = useState("priority")
