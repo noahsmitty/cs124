@@ -43,6 +43,18 @@ const collectionName = "List";
 const FAKE_EMAIL = 'foo@bar.com';
 const FAKE_PASSWORD = 'xyzzyxx';
 
+// Design Decision For Shared List
+// 1. Designate an owner for every list (whoever creates it)
+// 2. If shared with another user, the other user can't delete the shared list
+//   for this, before we delete we check if the user who is deleting is the owner
+// 3. icon (a share button) that will pop up a modal to share it with another user,
+// if that email doesn't exist, throw an error
+// 4. Only the owner can share lists to multiple people. IF A shares a list with B, B can't share that shared list
+// to C but A can share the same list with C.
+// 5. Shared lists distinguishable from unshared lists.
+// shared w or shared to have an icon that implies that the list has been shared by or shared to the user
+// 6. Click on icon would display the list of users who have access to that list
+// 7. No need to accept sharing
 
 function SignedInApp(props) {
     const collection = db.collection(collectionName);
