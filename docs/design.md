@@ -4,13 +4,44 @@ Authors:
 
 ## Our Design Decisions
 ----
-### NEW DESIGN FROM LAB 4
+### NEW DESIGN FROM LAB 5
 
-### MULTIPLE LISTS
-We have added a list of lists like functionality to account for multiple lists. Initially, you land on the home page which has a list of what we're calling "lists/categories", that can be edited and deleted.
-A new category can also be added. Upon clicking on these "lists/categories", we are taken to another page where we can see the list items inside that category. 
-![](../src/images/ml1.png)
-![](../src/images/ml2.png)
+#### 1. SUPPORT LOGIN
+First, we wanted to implement users and login + sign up functionality. We created a login page and a signup page, each differentiated by easily clickable tabs, with a simple field for an email and password to sign up, or the option to sign up with Google as well. Here is what both of these screens look like:
+![](../src/images/signin.png)![](../src/images/signup.png)
+
+Upon login or sign up, the user is navigated to the List view, where they can add, edit, or remove their to-do lists. 
+
+#### 2. SUPPORT SHARING
+
+In order to implement sharing of lists between users, we decided on the following:
+
+1. Designate an owner for every list (whoever creates it).
+2. If shared with another user, the other user can't delete the shared list. Only the owner can delete the list.
+3. Create a share button that will bring up a modal to share it with another user, where the user types in the email.
+4. Universal sharing is allowed, once a list is shared to a user, that user can also share it with other users.
+5. Shared lists are distinguishable from unshared lists, by an additional people icon.
+6. Clicking on the people icon displays a modal with a list of all users that have access to the shared list.
+7. Sharing is automatic, there is no need to accept it.
+
+
+For each list item, we added two additional buttons alongside the preexisting edit and delete buttons. These buttons allow the user to share their list with another user, or to indicate whether the list is already shared, and to view what users have access. Here is a what the new list items page looks like:
+![](../src/images/listpage.png)
+
+Notice how the shared list has an additional "people" icon.
+When the user clicks on the share button, this is what they see:
+
+![](../src/images/share.png)
+
+Then, if a list has been shared, here is what happens when they click on the people icon:
+![](../src/images/shared.png)
+
+Notice, the number of users that have access is displayed, as well as each user in a list.
+
+Nothing else in the task list has been changed since Lab 4.
+
+#### Challenges
+We had some challenges navigating the correct firebase rules to properly enable sharing. We also found it difficult to properly manipulate shared data.
 
 ----
 ### FROM LAB 3
