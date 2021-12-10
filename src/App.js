@@ -36,9 +36,8 @@ const googleProvider = new firebase.auth.GoogleAuthProvider();
 // const collectionName = "People-AuthenticationRequired";
 const collectionName = "List-AuthenticationRequired";
 
-//TODO: 1. Sign Up and Sign In for new users
-//TODO: 2. Document sharing (Shared Task List) - Design Discussions required
-// need to add rules to firebase for this
+//TODO: Shared Lists to be displayed for the other users as well
+// TODO: Add Icon if it is shared
 
 const FAKE_EMAIL = 'foo@bar.com';
 const FAKE_PASSWORD = 'xyzzyxx';
@@ -59,12 +58,15 @@ const FAKE_PASSWORD = 'xyzzyxx';
 
 function SignedInApp(props) {
     const collection = db.collection(collectionName);
-    const query = collection.where('owner', "==", props.user.uid);
+    // const query = collection.where("owner", "==", props.user.uid);
+    const query = collection.where("usersWithAccess", "array-contains", props.user.email);
     const [value, loading, error] = useCollection(query);
+    // const[valueShared, loadingShared, errorShared] = useCollection(sharedQuery);
     const [listId, setListId] = useState("");
     const [page, setPage] = useState("home");
     const [showAlert, setShowAlert] = useState(false);
     const [alertId, setAlertId] = useState(null);
+    const [modalType, setModalType] = useState(null);
 
     let data = [];
     if (value) {
@@ -72,22 +74,31 @@ function SignedInApp(props) {
             return {...doc.data()}
         });
     }
+
+    // let sharedData = [];
+    // console.log(valueShared, 'value');
+    // if (valueShared) {
+    //     sharedData = valueShared.docs.map((doc) => {
+    //         return {...doc.data()}
+    //     });
+    // }
+    //
+    // if (sharedData !== []) {
+    //     data.push(sharedData);
+    // }
     console.log("Data: ", data);
+    // console.log("shared:", sharedData);
 
     let listExists;
     listExists =! (alertId && data.filter((task) => task.id === alertId).length === 0);
-    // if (alertId && data.filter((task) => task.id === alertId).length === 0) {
-    //     listExists = false;
-    // } else {
-    //     listExists = true;
-    // }
 
     function addData(list) {
         console.log(props.user);
         const item = {
             id: generateUniqueID(),
             listName: list,
-            owner: props.user.uid
+            owner: props.user.uid,
+            usersWithAccess: [props.user.email]
         };
         const docRef = collection.doc(item.id);
         docRef.set(item).catch((error) => console.log("Error occurred in add list: ", error));
@@ -96,8 +107,18 @@ function SignedInApp(props) {
 
     function handleEditList(list, id) {
         const doc = collection.doc(id);
+        console.log(doc);
         doc.update({
             listName: list,
+        }).catch((error) => {
+            console.error("Error updating List Name: ", error);
+        })
+    }
+
+    function updateUserswithAccess(newUserEmail, id) {
+        const doc = collection.doc(id);
+        doc.update({
+            usersWithAccess: firebase.firestore.FieldValue.arrayUnion(newUserEmail)
         }).catch((error) => {
             console.error("Error updating List Name: ", error);
         })
@@ -114,9 +135,12 @@ function SignedInApp(props) {
         setPage(listName);
     }
 
-
     function toggleModal() {
         setShowAlert(!showAlert);
+    }
+
+    function changeModalType(type) {
+        setModalType(type);
     }
 
     return (
@@ -132,6 +156,7 @@ function SignedInApp(props) {
                                       handleDeleteList={handleDeleteList} toggleModal={toggleModal}
                                       id={item.id} showAlert={showAlert}
                                       setAlertId={setAlertId}
+                                      type={changeModalType}
                             />
 
                         </div>)}
@@ -144,7 +169,7 @@ function SignedInApp(props) {
                     />
                 </div>}
             {page === "home" && showAlert && listExists &&
-            <Alert onClose={toggleModal} onOK={handleEditList} type={"list"} id={alertId}/>}
+            <Alert onClose={toggleModal} onOK={handleEditList} onShare={updateUserswithAccess} type={modalType} id={alertId}/>}
         </div>
     )
 }
