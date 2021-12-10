@@ -48,9 +48,10 @@ const FAKE_PASSWORD = 'xyzzyxx';
 // 2. If shared with another user, the other user can't delete the shared list
 //   for this, before we delete we check if the user who is deleting is the owner
 // 3. icon (a share button) that will pop up a modal to share it with another user,
-// if that email doesn't exist, throw an error
+// if that email doesn't exist
 // 4. Only the owner can share lists to multiple people. IF A shares a list with B, B can't share that shared list
 // to C but A can share the same list with C.
+// shared lists array includes owner's email, if len > 1, then it's shared list
 // 5. Shared lists distinguishable from unshared lists.
 // shared w or shared to have an icon that implies that the list has been shared by or shared to the user
 // 6. Click on icon would display the list of users who have access to that list
@@ -59,7 +60,7 @@ const FAKE_PASSWORD = 'xyzzyxx';
 function SignedInApp(props) {
     const collection = db.collection(collectionName);
     const query = collection.where('owner', "==", props.user.uid);
-    const [value, loading, error] = useCollection(collection);
+    const [value, loading, error] = useCollection(query);
     const [listId, setListId] = useState("");
     const [page, setPage] = useState("home");
     const [showAlert, setShowAlert] = useState(false);
