@@ -1,8 +1,7 @@
-import List from './List'
 import './App.css';
+import './Alert.css';
 import {useState} from "react";
 import {generateUniqueID} from "web-vitals/dist/modules/lib/generateUniqueID";
-import AddTask from "./AddTask";
 import AddCategory from "./AddCategory";
 import firebase from "firebase/compat";
 import {useCollection} from "react-firebase-hooks/firestore";
@@ -33,40 +32,21 @@ const db = firebase.firestore();
 
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
-// const collectionName = "People-AuthenticationRequired";
 const collectionName = "List-AuthenticationRequired";
 
-//TODO: Shared Lists to be displayed for the other users as well
-// TODO: Add Icon if it is shared
-
-const FAKE_EMAIL = 'foo@bar.com';
-const FAKE_PASSWORD = 'xyzzyxx';
-
-// Design Decision For Shared List
-// 1. Designate an owner for every list (whoever creates it)
-// 2. If shared with another user, the other user can't delete the shared list
-//   for this, before we delete we check if the user who is deleting is the owner
-// 3. icon (a share button) that will pop up a modal to share it with another user,
-// if that email doesn't exist
-// 4. Only the owner can share lists to multiple people. IF A shares a list with B, B can't share that shared list
-// to C but A can share the same list with C.
-// shared lists array includes owner's email, if len > 1, then it's shared list
-// 5. Shared lists distinguishable from unshared lists.
-// shared w or shared to have an icon that implies that the list has been shared by or shared to the user
-// 6. Click on icon would display the list of users who have access to that list
-// 7. No need to accept sharing
 
 function SignedInApp(props) {
     const collection = db.collection(collectionName);
-    // const query = collection.where("owner", "==", props.user.uid);
-    const query = collection.where("usersWithAccess", "array-contains", props.user.email);
+    const query = collection.where("owner", "==", props.user.uid);
+    const sharedQuery = collection.where("usersWithAccess", "array-contains", props.user.email);
     const [value, loading, error] = useCollection(query);
-    // const[valueShared, loadingShared, errorShared] = useCollection(sharedQuery);
+    const[valueShared, loadingShared, errorShared] = useCollection(sharedQuery);
     const [listId, setListId] = useState("");
     const [page, setPage] = useState("home");
     const [showAlert, setShowAlert] = useState(false);
     const [alertId, setAlertId] = useState(null);
     const [modalType, setModalType] = useState(null);
+    const [sharedList, setSharedList] = useState([]);
 
     let data = [];
     if (value) {
@@ -75,25 +55,24 @@ function SignedInApp(props) {
         });
     }
 
-    // let sharedData = [];
-    // console.log(valueShared, 'value');
-    // if (valueShared) {
-    //     sharedData = valueShared.docs.map((doc) => {
-    //         return {...doc.data()}
-    //     });
-    // }
-    //
-    // if (sharedData !== []) {
-    //     data.push(sharedData);
-    // }
-    console.log("Data: ", data);
-    // console.log("shared:", sharedData);
+    let sharedData = [];
+    if (valueShared) {
+        sharedData = valueShared.docs.map((doc) => {
+            return {...doc.data()}
+        });
+    }
+
+    if (data.length === 0 && sharedData.length !== 0) {
+        data = sharedData;
+    }
+    else if (data.length !== 0 && sharedData.length !== 0) {
+        data.concat(sharedData);
+    }
 
     let listExists;
     listExists =! (alertId && data.filter((task) => task.id === alertId).length === 0);
 
     function addData(list) {
-        console.log(props.user);
         const item = {
             id: generateUniqueID(),
             listName: list,
@@ -102,12 +81,10 @@ function SignedInApp(props) {
         };
         const docRef = collection.doc(item.id);
         docRef.set(item).catch((error) => console.log("Error occurred in add list: ", error));
-        console.log("item", item);
     }
 
     function handleEditList(list, id) {
         const doc = collection.doc(id);
-        console.log(doc);
         doc.update({
             listName: list,
         }).catch((error) => {
@@ -143,6 +120,10 @@ function SignedInApp(props) {
         setModalType(type);
     }
 
+    function updateSharedList(sharedList) {
+        setSharedList(sharedList);
+    }
+
     return (
         <div className={"todo"}>
 
@@ -157,6 +138,8 @@ function SignedInApp(props) {
                                       id={item.id} showAlert={showAlert}
                                       setAlertId={setAlertId}
                                       type={changeModalType}
+                                      sharedWith={item.usersWithAccess}
+                                      isShared={updateSharedList}
                             />
 
                         </div>)}
@@ -169,7 +152,8 @@ function SignedInApp(props) {
                     />
                 </div>}
             {page === "home" && showAlert && listExists &&
-            <Alert onClose={toggleModal} onOK={handleEditList} onShare={updateUserswithAccess} type={modalType} id={alertId}/>}
+            <Alert onClose={toggleModal} onOK={handleEditList} onShare={updateUserswithAccess} type={modalType} id={alertId}
+            sharedWith={sharedList}/>}
         </div>
     )
 }
@@ -183,27 +167,29 @@ function SignIn() {
     const [password, setPassword] = useState("");
 
     if (userCredential) {
-        // Shouldn't happen because App should see that
-        // we are signed in.
         return <div>Unexpectedly signed in already</div>
     } else if (loading) {
         return <p>Logging in…</p>
     }
     return <div>
+        <div className={"signin"}>
         {error && <p>"Error logging in: " {error.message}</p>}
         <input type={"text"} placeholder={"Enter Username"} onChange={(e) => setUsername(e.currentTarget.value)}/>
         <br/>
         <input type={"password"} placeholder={"Enter Password"} onChange={(e) => setPassword(e.currentTarget.value)}/>
         <br/>
-        <button onClick={() =>
+        </div>
+        <div className={"center"}>
+        <button className={"button"} onClick={() =>
             signInWithEmailAndPassword(username, password)}>Login
         </button>
-        <button onClick={() =>
+        <button className={"button"} onClick={() =>
             auth.signInWithPopup(googleProvider)}>Login with Google
         </button>
+        </div>
     </div>
 }
-// seems like it immediately signs you in after you sign up - do we want this?
+
 function SignUp() {
     const [
         createUserWithEmailAndPassword,
@@ -212,20 +198,18 @@ function SignUp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     if (userCredential) {
-        // Shouldn't happen because App should see that
-        // we are signed in.
         return <div>Unexpectedly signed in already</div>
     } else if (loading) {
         return <p>Signing up…</p>
     }
-    return <div>
+    return <div className={"signin"}>
         {error && <p>"Error signing up: " {error.message}</p>}
 
         <input type={"text"} placeholder={"Enter Username"} onChange={(e) => setUsername(e.currentTarget.value)}/>
         <br/>
         <input type={"password"} placeholder={"Enter Password"} onChange={(e) => setPassword(e.currentTarget.value)}/>
-        <br/>
-        <button onClick={() =>
+            <br/>
+        <button className={"button"} onClick={() =>
             createUserWithEmailAndPassword(username, password)}>
             Sign Up
         </button>
@@ -246,16 +230,18 @@ function App(props) {
         return <div>
             {user.displayName || user.email}
             <SignedInApp {...props} user={user}/>
-            <button type="button" onClick={() => auth.signOut()}>Logout</button>
-            {!user.emailVerified && <button type="button" onClick={verifyEmail}>Verify email</button>}
+            <button className={"button end"} type="button" onClick={() => auth.signOut()}>Logout</button>
+            {!user.emailVerified && <button className={"button end"} type="button" onClick={verifyEmail}>Verify email</button>}
         </div>
     } else {
         return <>
             {error && <p>Error App: {error.message}</p>}
+            <div className={"container center"}>
             <TabList>
                 <SignIn key="Sign In"/>
                 <SignUp key="Sign Up"/>
             </TabList>
+            </div>
         </>
     }
 }

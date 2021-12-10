@@ -1,7 +1,8 @@
 import Edit from "./edit_pencil.png";
 import Delete from "./trash_can.png";
 import Share from "./index.png";
-import Alert from "./Alert";
+import SharedWith from "./shared.png";
+import './Item.css'
 
 
 function ListItem(props) {
@@ -22,7 +23,7 @@ function ListItem(props) {
                     onClick={() => props.handleDeleteList(props.id)}><img src={Delete} height={"25"} width={"25"}
                                                                           alt={"delete-icon"} className={"edit"}/>
             </button>
-            <button className={"shareButton"} id={props.id} aria-label={"Share List, click to share this list"}
+            <button className={"deleteButton"} id={props.id} aria-label={"Share List, click to share this list"}
                     onClick={() => {
                         props.setAlertId(props.id);
                         props.toggleModal();
@@ -30,6 +31,17 @@ function ListItem(props) {
                     }}><img src={Share} height={"25"} width={"25"}
                                                                           alt={"share-icon"} className={"edit"}/>
             </button>
+            {props.sharedWith.length > 1 &&
+            <button className={"deleteButton"} id={props.id} aria-label={"Shared With Indicator, click to share see the list of emails this item is shared with"}
+                    onClick={() => {
+                        props.setAlertId(props.id);
+                        props.toggleModal();
+                        props.type("shared-with");
+                        props.isShared(props.sharedWith);
+                    }}><img src={SharedWith} height={"25"} width={"25"}
+                            alt={"sharedWith-icon"} className={"edit"}/>
+            </button>}
+
         </div>
 
     );

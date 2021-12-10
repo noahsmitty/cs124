@@ -1,7 +1,5 @@
 import "./App.css"
 import {useState} from "react";
-import TaskList from "./TaskList";
-
 
 function AddCategory(props) {
     const [category, setCategory] = useState('');

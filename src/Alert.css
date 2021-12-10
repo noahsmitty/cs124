@@ -54,3 +54,7 @@
     border-radius:20px;
     align-items: center;
 }
+
+.shared-list {
+    list-style: decimal;
+}

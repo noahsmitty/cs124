@@ -85,6 +85,25 @@ function Alert(props) {
                     </button>
                 </div>
             </div>}
+            {props.type === "shared-with" &&
+            <div className="modal">
+                {props.sharedWith.length} users have access to this list
+                <div className={"text"}>
+                    <ul className={"shared-list"}>
+                        {props.sharedWith.map(user =>
+                            <li key={user}>{user}</li>)}
+                    </ul>
+                </div>
+
+                <div className="alert-buttons">
+                    <button className={"alert-button"} type={"button"}
+                            onClick={() => {
+                                props.onClose();
+                            }}>
+                        OK
+                    </button>
+                </div>
+            </div>}
         </div>);
 }
 

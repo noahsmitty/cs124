@@ -9,6 +9,7 @@ h1 {
   color: black;
   border-radius:20px;
   text-shadow:none;
+  margin: 5px;
 }
 
 .todo {
@@ -75,4 +76,20 @@ h1 {
   align-items: center;
   justify-content: center;
   flex-direction: row;
+}
+
+.end {
+  margin-top: 1%;
+}
+
+.signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container {
+  border: solid 5px black;
+  background: #A4E0EB;
 }
