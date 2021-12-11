@@ -1,0 +1,95 @@
+h1 {
+  font-family: "Roboto Mono for Powerline", "sans-serif";
+  text-align: center;
+  text-shadow: 1px 1px gray;
+}
+
+.button {
+  background:#DEAFA6;
+  color: black;
+  border-radius:20px;
+  text-shadow:none;
+  margin: 5px;
+}
+
+.todo {
+  border: 2px solid;
+  background-color: #A4E0EB;
+}
+
+#list {
+  margin: 10px 10px 10px 15px;
+  border: 3px solid #c299c0;
+  padding: 3px;
+  background: #c299c0;
+  box-shadow: 3px 3px #888888;
+}
+
+.sorting {
+  margin: 10px 10px 10px 15px;
+  padding: 3px;
+  border: 2px solid #c299c0;
+  background: #c299c0;
+}
+#sort {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+#sort-by {
+  border: 2px solid #c299c0;
+  background: white;
+  border-radius:20px;
+  align-items: center;
+}
+
+#task-description {
+  border: 2px solid #c299c0;
+  background: white;
+}
+
+#priority {
+  border: 2px solid #c299c0;
+  background: white;
+  margin-right: 3px;
+  border-radius:20px;
+  align-items: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.taskinput {
+  width: 80%;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.end {
+  margin-top: 1%;
+}
+
+.signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.container {
+  border: solid 5px black;
+  background: #A4E0EB;
+}
